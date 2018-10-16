@@ -1,8 +1,8 @@
 // Integrantes do grupo :
 // Fábio Mario Fialho Silva 78866
-// Giovanna 
-// Rafael Koji
-// Renan
+// Giovanna Fantini 77796
+// Rafael Koji 78103
+// Renan Ventura 78161
 // Samantha Rie Ishizaki 79065
 
 #include <string.h>
