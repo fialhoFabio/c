@@ -1,5 +1,13 @@
+// Integrantes do grupo :
+// Fábio Mario Fialho Silva 78866
+// Giovanna Fantini 77796
+// Rafael Koji 78103
+// Renan Ventura 78161
+// Samantha Rie Ishizaki 79065
+
 #include <stdio.h>
 #include <stdlib.h>
+#include "TipoFilaCandidato.h"
 
 int main() {
   int op, total = 0, telefone;
