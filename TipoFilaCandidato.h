@@ -1,3 +1,10 @@
+// Integrantes do grupo :
+// Fábio Mario Fialho Silva 78866
+// Giovanna 
+// Rafael Koji
+// Renan
+// Samantha Rie Ishizaki 79065
+
 #include <string.h>
 
 struct CadastroCandidato {
