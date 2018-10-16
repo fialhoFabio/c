@@ -1,80 +1,64 @@
-#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-struct CadastroCandidato {
-	char nome[60];
-	char endereco[100];
-	char email[60];
-	int telefone;
-	char linguagem[60];
-	float pre_salario;
-};
-
-struct no {
-       struct CadastroCandidato dado;
-       struct no *prox;
-};
-
-typedef struct no* TipoFila;
-
-void INIT(TipoFila *ini, TipoFila *fim)
-{
-*ini = NULL;
-*fim = NULL;
-}
-
-int IsEmpty(TipoFila ini,TipoFila fim) {
-  if (ini == NULL && fim == NULL) return(1);
-  else return(0);
-}
-
-void ENQUEUE( TipoFila *ini, TipoFila *fim, char nome[60], char endereco[100], char email[60], char linguagem[60], int telefone, float pretencao) {
-  TipoFila novo;
-  novo=(TipoFila ) malloc (sizeof(struct no));
-  if (novo == NULL) printf("Fila Cheia \n");
-  else {
-    strcpy(novo->dado.nome, nome);
-    strcpy(novo->dado.endereco, endereco);
-    strcpy(novo->dado.email, email);
-    strcpy(novo->dado.linguagem, linguagem);
-    novo->dado.telefone = telefone;
-    novo->dado.pre_salario = pretencao;
-    novo->prox=NULL;
-    if (IsEmpty(*ini,*fim)) {
-      *ini = novo;
-    } else {
-      (*fim)->prox= novo;
-    }
-    *fim=novo;
-  }
-}
-
-int FIRST (TipoFila *ini, TipoFila *fim, char *nome, float *pretencao) {
-	if(!IsEmpty(*ini, *fim)){
-		strcpy(nome, (*ini)->dado.nome);
-		*pretencao = (*ini)->dado.pre_salario;
-		return(1);
-	}
-	else
-		return (0);
-}
-
-void FIRSTATEND (TipoFila *ini, TipoFila *fim) {
-	if (!IsEmpty(*ini, *fim)) {
-	  (*fim)->prox = *ini;
-	  *fim = *ini;
-	  *ini = (*ini)->prox;
-	}
-}
-
-void CLEANQUEUE (TipoFila *ini, TipoFila *fim) {
-  TipoFila aux;
-	if (!IsEmpty(*ini, *fim)) {
-	  aux = *ini;
-		*ini = (*ini)->prox;
-		free(aux);
-		if (*ini == NULL) {
-		  *fim = NULL;
+int main() {
+  int op, total = 0, telefone;
+  char nome[60], endereco[100], email[60], linguagem[60];
+  float pretencao;
+  char first_nome[60];
+  float first_pretencao;
+  TipoFila ini,fim;
+  INIT(&ini,&fim);
+  do {
+    printf("1- Inscrição de candidato\n");
+    printf("2- Vaga de emprego\n");
+    printf("3- Encerra o programa\n");
+    scanf("%d", &op);
+    switch(op) {
+      case 1:
+        printf("Nome:");
+        scanf("%s", &nome);
+        printf("Endereco:");
+        scanf("%s", &endereco);
+        printf("E-mail:");
+        scanf("%s", &email);
+        printf("Linguagem");
+        scanf("%s", &linguagem);
+        printf("Telefone");
+        scanf("%d", &telefone);
+        printf("Pretencao salarial:");
+        scanf("%f", &pretencao);
+        ENQUEUE(&ini, &fim, nome, endereco, email, linguagem, telefone, pretencao);
+        total++;
+        break;
+      case 2:
+        printf("Linguagem:");
+        scanf("%s", &nome);
+        printf("Pretencao salarial");
+        scanf("%f", &pretencao);
+        for (int i = 0; i < total; i++) {
+          if (FIRST(&ini, &fim, &first_nome, &first_pretencao)) {
+            if (strcmp(first_nome, nome) == 0 && first_pretencao >= pretencao) {
+              int opc;
+              printf("Entre em contato com o candidato...\nO candidato aceitou a vaga de emprego?\n1. Sim\n2. Nao");
+              scanf("%d", &opc);
+              if (opc == 1) {
+                break;
+              } else {
+                FIRSTATEND(&ini, &fim);
+              }
+            } else {
+              FIRSTATEND(&ini, &fim);
+            }
+          }
+        }
+        break;
+      case 3:
+        printf("fim da execucao");
+        CLEANQUEUE(&ini, &fim);
+        break;
+      default:
+        printf("opcao invalida\n");
 		}
-		CLEANQUEUE(ini, fim);
-	}
+	} while(op !=3);
 }
